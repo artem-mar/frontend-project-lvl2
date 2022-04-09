@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "[![Actions Status](https://github.com/artem-mar/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/artem-mar/frontend-project-lvl2/actions)",
-  "main": "index.js",
+  "main": "src/genDiff.js",
   "bin": {
     "gendiff": "bin/gendiff.js"
   },
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/artem-mar/frontend-project-lvl2#readme",
   "dependencies": {
-    "commander": "^9.1.0"
+    "commander": "^9.1.0",
+    "lodash": "^4.17.21"
   }
 }
