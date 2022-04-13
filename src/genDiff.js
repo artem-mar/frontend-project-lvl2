@@ -4,11 +4,11 @@ import _ from 'lodash';
 
 const genDiff = (path1, path2) => {
   const file1 = JSON.parse(
-    fs.readFileSync(path.resolve(process.cwd(), path1), 'utf8')
+    fs.readFileSync(path.resolve(process.cwd(), path1), 'utf8'),
   );
   const keys1 = Object.keys(file1);
   const file2 = JSON.parse(
-    fs.readFileSync(path.resolve(process.cwd(), path2), 'utf8')
+    fs.readFileSync(path.resolve(process.cwd(), path2), 'utf8'),
   );
   const keys2 = Object.keys(file2);
 
@@ -16,13 +16,15 @@ const genDiff = (path1, path2) => {
 
   const resultArray = allSortedUniqKeys.reduce((acc, key) => {
     if (keys1.includes(key) && keys2.includes(key)) {
-      file1[key] === file2[key]
-        ? acc.push(`   ${key}: ${file1[key]}`)
-        : acc.push(` - ${key}: ${file1[key]}\n + ${key}: ${file2[key]}`);
-    } else if (keys1.includes(key) && !keys2.includes(key)) {
-      acc.push(` - ${key}: ${file1[key]}`);
-    } else if (!keys1.includes(key) && keys2.includes(key)) {
-      acc.push(` + ${key}: ${file2[key]}`);
+      return file1[key] === file2[key]
+        ? [...acc, `   ${key}: ${file1[key]}`]
+        : [...acc, ` - ${key}: ${file1[key]}\n + ${key}: ${file2[key]}`];
+    }
+    if (keys1.includes(key) && !keys2.includes(key)) {
+      return [...acc, ` - ${key}: ${file1[key]}`];
+    }
+    if (!keys1.includes(key) && keys2.includes(key)) {
+      return [...acc, ` + ${key}: ${file2[key]}`];
     }
     return acc;
   }, []);
