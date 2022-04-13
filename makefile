@@ -1,8 +1,11 @@
 install:
-	npm ci;
+	npm ci
 
 publish:
-	npm publish --dry-run;
+	npm publish --dry-run
 
 make lint:
-	npx eslint .;
+	npx eslint .
+
+make test:
+	NODE_OPTIONS=--experimental-vm-modules npx jest

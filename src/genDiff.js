@@ -23,10 +23,8 @@ const genDiff = (path1, path2) => {
     if (keys1.includes(key) && !keys2.includes(key)) {
       return [...acc, ` - ${key}: ${file1[key]}`];
     }
-    if (!keys1.includes(key) && keys2.includes(key)) {
-      return [...acc, ` + ${key}: ${file2[key]}`];
-    }
-    return acc;
+
+    return [...acc, ` + ${key}: ${file2[key]}`];
   }, []);
   const resultString = _.join(resultArray, '\n');
   return `{\n${resultString}\n}`;
