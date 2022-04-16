@@ -1,15 +1,10 @@
-import * as fs from 'fs';
-import path from 'path';
 import _ from 'lodash';
+import parse from './parse.js';
 
 const genDiff = (path1, path2) => {
-  const file1 = JSON.parse(
-    fs.readFileSync(path.resolve(process.cwd(), path1), 'utf8'),
-  );
+  const file1 = parse(path1);
   const keys1 = Object.keys(file1);
-  const file2 = JSON.parse(
-    fs.readFileSync(path.resolve(process.cwd(), path2), 'utf8'),
-  );
+  const file2 = parse(path2);
   const keys2 = Object.keys(file2);
 
   const allSortedUniqKeys = _.sortedUniq(_.union(keys1, keys2).sort());
