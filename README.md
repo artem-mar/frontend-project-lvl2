@@ -7,4 +7,6 @@
 
 <a href="https://codeclimate.com/github/artem-mar/frontend-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/87cfca021c78ba9b2314/test_coverage" /></a>
 
-<a href="https://asciinema.org/a/OI98pION0a0fYsv3HHh0tfSq0">Step 3</a>
+<a href="https://asciinema.org/a/OI98pION0a0fYsv3HHh0tfSq0">gendiff .json</a>
+
+<a href="https://asciinema.org/a/MIeyrzauREkvd5FoQw72WwaaW">gendiff .yaml</a>
