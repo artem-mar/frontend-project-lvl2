@@ -10,3 +10,5 @@
 <a href="https://asciinema.org/a/OI98pION0a0fYsv3HHh0tfSq0">gendiff .json</a>
 
 <a href="https://asciinema.org/a/MIeyrzauREkvd5FoQw72WwaaW">gendiff .yaml</a>
+
+<a href="https://asciinema.org/a/31BrEWnwNbNc2Kep6WtLA7mAU">gendiff nested</a>
