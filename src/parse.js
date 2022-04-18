@@ -4,7 +4,7 @@ import yaml from 'js-yaml';
 import getAbsolutePath from './getAbsolutePath.js';
 
 const parse = (filePath) => {
-  let fileContent = null;
+  let fileContent;
   switch (path.extname(filePath)) {
     case '.json':
       fileContent = JSON.parse(fs.readFileSync(getAbsolutePath(filePath), 'utf8'));
