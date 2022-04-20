@@ -17,19 +17,19 @@ const plain = (differences) => {
       let string;
       switch (item.type) {
         case 'added': {
-          string = `\nProperty '${path}' was added with value: ${value}`;
+          string = `Property '${path}' was added with value: ${value}\n`;
           break;
         }
         case 'removed': {
-          string = `\nProperty '${path}' was removed`;
+          string = `Property '${path}' was removed\n`;
           break;
         }
         case 'updRemoved': {
-          string = `\nProperty '${path}' was updated. From ${value} to `;
+          string = `Property '${path}' was updated. From ${value} to `;
           break;
         }
         case 'updAdded': {
-          string = `${value}`;
+          string = `${value}\n`;
           break;
         }
         case 'comparison object': {
@@ -44,7 +44,7 @@ const plain = (differences) => {
     });
     return lines.join('');
   };
-  return iter(differences);
+  return iter(differences).trim();
 };
 
 export default plain;

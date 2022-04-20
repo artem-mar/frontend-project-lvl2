@@ -58,8 +58,8 @@ test('genDiff stylish', () => {
     '    }',
     '}',
   ];
-  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json')).toBe(`\n${expected.join('\n')}`);
-  expect(genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yml')).toBe(`\n${expected.join('\n')}`);
+  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json')).toBe(`${expected.join('\n')}`);
+  expect(genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yml')).toBe(`${expected.join('\n')}`);
 });
 
 test('genDiff plain', () => {
@@ -77,9 +77,9 @@ test('genDiff plain', () => {
     "Property 'group3' was added with value: [complex value]",
   ];
   expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'plain'))
-    .toBe(`\n${expected.join('\n')}`);
+    .toBe(`${expected.join('\n')}`);
   expect(genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yml', 'plain'))
-    .toBe(`\n${expected.join('\n')}`);
+    .toBe(`${expected.join('\n')}`);
 });
 
 test('genDiff json', () => {

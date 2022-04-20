@@ -58,7 +58,7 @@ const stylish = (diffs) => {
       `${bracketIndent}}`,
     ].join('\n');
   };
-  return `\n${iter(diffs, 1)}`;
+  return iter(diffs, 1);
 };
 
 export default stylish;
