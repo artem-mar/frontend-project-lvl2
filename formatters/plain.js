@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const plain = (diff) => {
+const plain = (differences) => {
   const iter = (diffs, pat = undefined) => {
     const lines = diffs.map((item) => {
       const path = pat ? `${pat}.${item.key}` : item.key;
@@ -44,7 +44,7 @@ const plain = (diff) => {
     });
     return lines.join('');
   };
-  return iter(diff);
+  return iter(differences);
 };
 
 export default plain;
