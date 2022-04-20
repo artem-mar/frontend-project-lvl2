@@ -5,12 +5,16 @@ const plain = (differences) => {
     const lines = diffs.map((item) => {
       const path = pat ? `${pat}.${item.key}` : item.key;
       // тут мы добиваемся того, чтоб строки были в кавычках, а [complex] и boolean - без
-      let { value } = item;
-      if (_.isObject(item.value)) {
-        value = '[complex value]';
-      } else if (typeof item.value === 'string') {
-        value = `'${item.value}'`;
-      }
+      const valueFormatter = (value) => {
+        if (_.isObject(value)) {
+          return '[complex value]';
+        }
+        if (typeof value === 'string') {
+          return `'${item.value}'`;
+        }
+        return item.value;
+      };
+      const value = valueFormatter(item.value);
 
       switch (item.type) {
         case 'added': {
