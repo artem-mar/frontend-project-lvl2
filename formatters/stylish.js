@@ -4,7 +4,6 @@ const stylish = (diffs) => {
   const iter = (currentValue, deepth) => {
     const indentSize = deepth * 4;
     // 4 - кол-во отступов (по заданию). я не придумал, как избавиться от магического числа
-    // 2 отступа оставляем для +/-. если +/- нет, добавим 2 пробела по факту
     const currentIndent = ' '.repeat(indentSize);
     const changedIndent = ' '.repeat(indentSize - 2); // для элементов с +/-
     const bracketIndent = ' '.repeat(indentSize - 4);

@@ -32,6 +32,7 @@ const compare = (obj1, obj2) => {
     }
 
     // if (obj1[key] !== obj2[key]) - остается только этот вариант
+    // obj1[key] и obj2[key] могут быть как примитивами, так и объектами
     return [
       ...acc,
       { key, value: obj1[key], type: 'updRemoved' },
