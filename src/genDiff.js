@@ -1,13 +1,14 @@
-import parse from './parse.js';
+import parser from './parser.js';
 import compare from './compare.js';
-import stylish from './stylish.js';
+import chooseFormat from '../formatters/index.js';
 
-const genDiff = (path1, path2, style = stylish) => {
-  const file1 = parse(path1);
-  const file2 = parse(path2);
+const genDiff = (path1, path2, formatName = 'stylish') => {
+  const file1 = parser(path1);
+  const file2 = parser(path2);
   const differences = compare(file1, file2);
+  const formatter = chooseFormat(formatName);
 
-  return style(differences);
+  return formatter(differences);
 };
 
 export default genDiff;
