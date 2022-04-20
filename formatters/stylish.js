@@ -8,49 +8,39 @@ const stylish = (diffs) => {
     const changedIndent = ' '.repeat(indentSize - 2); // для элементов с +/-
     const bracketIndent = ' '.repeat(indentSize - 4);
 
-    let lines = [];
-    if (Array.isArray(currentValue)) {
-      lines = currentValue.map((item) => {
-        let line;
+    const lines = Array.isArray(currentValue)
+      ? currentValue.map((item) => {
         switch (item.type) {
           case 'equal':
-            line = `${currentIndent}${item.key}: ${item.value}`;
-            break;
+            return `${currentIndent}${item.key}: ${item.value}`;
 
           case 'removed':
           case 'updRemoved':
-            line = _.isPlainObject(item.value)
+            return _.isPlainObject(item.value)
               ? `${changedIndent}- ${item.key}: ${iter(item.value, deepth + 1)}`
               : `${changedIndent}- ${item.key}: ${item.value}`;
-            break;
 
           case 'added':
           case 'updAdded':
-            line = _.isPlainObject(item.value)
+            return _.isPlainObject(item.value)
               ? `${changedIndent}+ ${item.key}: ${iter(item.value, deepth + 1)}`
               : `${changedIndent}+ ${item.key}: ${item.value}`;
-            break;
 
           case 'comparison object':
-            line = `${currentIndent}${item.key}: ${iter(item.value, deepth + 1)}`;
-            break;
-
+            return `${currentIndent}${item.key}: ${iter(item.value, deepth + 1)}`;
           default:
+            return '';
             // сюда вроде ничего не должно попасть, но линтер требует
         }
-        return line;
-      });
-    }
+      })
     /* ниже обрабатываем случаи, когда значение было скопировано "как есть" функцией
     compare. см. коменты в compare.js */
-    if (_.isPlainObject(currentValue)) {
-      lines = Object
+      : Object
         .entries(currentValue)
         .map(([key, val]) => {
           const value = _.isPlainObject(val) ? iter(val, deepth + 1) : val;
           return `${currentIndent}${key}: ${value}`;
         });
-    }
 
     return [
       '{',

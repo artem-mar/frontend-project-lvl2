@@ -5,42 +5,33 @@ const plain = (differences) => {
     const lines = diffs.map((item) => {
       const path = pat ? `${pat}.${item.key}` : item.key;
       // тут мы добиваемся того, чтоб строки были в кавычках, а [complex] и boolean - без
-      let value;
+      let { value } = item;
       if (_.isObject(item.value)) {
         value = '[complex value]';
       } else if (typeof item.value === 'string') {
         value = `'${item.value}'`;
-      } else {
-        value = item.value;
       }
 
-      let string;
       switch (item.type) {
         case 'added': {
-          string = `Property '${path}' was added with value: ${value}\n`;
-          break;
+          return `Property '${path}' was added with value: ${value}\n`;
         }
         case 'removed': {
-          string = `Property '${path}' was removed\n`;
-          break;
+          return `Property '${path}' was removed\n`;
         }
         case 'updRemoved': {
-          string = `Property '${path}' was updated. From ${value} to `;
-          break;
+          return `Property '${path}' was updated. From ${value} to `;
         }
         case 'updAdded': {
-          string = `${value}\n`;
-          break;
+          return `${value}\n`;
         }
         case 'comparison object': {
-          string = iter(item.value, path);
-          break;
+          return iter(item.value, path);
         }
         default: {
-          break;
+          return '';
         }
       }
-      return string;
     });
     return lines.join('');
   };

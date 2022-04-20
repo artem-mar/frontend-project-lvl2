@@ -3,7 +3,7 @@ import _ from 'lodash';
 const compare = (obj1, obj2) => {
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
-  const allSortedUniqKeys = _.sortedUniq(_.union(keys1, keys2).sort());
+  const allSortedUniqKeys = _.sortedUniq(_.sortBy(_.union(keys1, keys2)));
 
   const differences = allSortedUniqKeys.reduce((acc, key) => {
     if (keys1.includes(key) && !keys2.includes(key)) {

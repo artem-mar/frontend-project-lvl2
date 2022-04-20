@@ -3,16 +3,14 @@ import plain from './plain.js';
 import toJSON from './json.js';
 
 const chooseFormat = (format) => {
-  let formatter;
   if (format === 'plain') {
-    formatter = plain;
-  } else if (format === 'json') {
-    formatter = toJSON;
-  } else {
-    formatter = stylish;
+    return plain;
+  }
+  if (format === 'json') {
+    return toJSON;
   }
 
-  return formatter;
+  return stylish;
 };
 
 export default chooseFormat;
