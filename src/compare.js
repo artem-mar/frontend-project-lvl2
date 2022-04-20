@@ -7,7 +7,7 @@ const compare = (obj1, obj2) => {
 
   const differences = allSortedUniqKeys.reduce((acc, key) => {
     if (keys1.includes(key) && !keys2.includes(key)) {
-      const type = 'deleted';
+      const type = 'removed';
       const value = obj1[key];
       return [...acc, { key, value, type }];
     }
@@ -34,8 +34,8 @@ const compare = (obj1, obj2) => {
     // if (obj1[key] !== obj2[key]) - остается только этот вариант
     return [
       ...acc,
-      { key, value: obj1[key], type: 'deleted' },
-      { key, value: obj2[key], type: 'added' },
+      { key, value: obj1[key], type: 'updRemoved' },
+      { key, value: obj2[key], type: 'updAdded' },
     ];
   }, []);
 
