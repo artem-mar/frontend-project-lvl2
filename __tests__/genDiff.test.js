@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import genDiff from '../src/genDiff';
 
-test('genDiff', () => {
+test('genDiff stylish', () => {
   const expected = [
     '{',
     '    common: {',
@@ -48,6 +48,26 @@ test('genDiff', () => {
     '    }',
     '}',
   ];
-  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json')).toBe(expected.join('\n'));
-  expect(genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yml')).toBe(expected.join('\n'));
+  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json')).toBe(`\n${expected.join('\n')}`);
+  expect(genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yml')).toBe(`\n${expected.join('\n')}`);
+});
+
+test('genDiff plain', () => {
+  const expected = [
+    "Property 'common.follow' was added with value: false",
+    "Property 'common.setting2' was removed",
+    "Property 'common.setting3' was updated. From true to null",
+    "Property 'common.setting4' was added with value: 'blah blah'",
+    "Property 'common.setting5' was added with value: [complex value]",
+    "Property 'common.setting6.doge.wow' was updated. From '' to 'so much'",
+    "Property 'common.setting6.ops' was added with value: 'vops'",
+    "Property 'group1.baz' was updated. From 'bas' to 'bars'",
+    "Property 'group1.nest' was updated. From [complex value] to 'str'",
+    "Property 'group2' was removed",
+    "Property 'group3' was added with value: [complex value]",
+  ];
+  expect(genDiff('__fixtures__/file1.json', '__fixtures__/file2.json', 'plain'))
+    .toBe(`\n${expected.join('\n')}`);
+  expect(genDiff('__fixtures__/file1.yaml', '__fixtures__/file2.yml', 'plain'))
+    .toBe(`\n${expected.join('\n')}`);
 });
