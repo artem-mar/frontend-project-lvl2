@@ -1,16 +1,10 @@
-import * as fs from 'fs';
-import path from 'path';
 import yaml from 'js-yaml';
-import getAbsolutePath from './getAbsolutePath.js';
 
-const parser = (filePath) => {
-  const extension = path.extname(filePath);
-  const content = fs.readFileSync(getAbsolutePath(filePath), 'utf8');
-
+const parse = ([data, extension]) => {
   if (extension === '.yaml' || extension === '.yml') {
-    return yaml.load(content);
+    return yaml.load(data);
   }
-  return JSON.parse(content);
+  return JSON.parse(data);
 };
 
-export default parser;
+export default parse;
