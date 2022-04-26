@@ -1,33 +1,37 @@
 /* eslint-disable no-undef */
 import { fileURLToPath } from 'url';
 import path from 'path';
+import * as fs from 'fs';
 import genDiff from '../index.js';
-import {
-  expectedResultStylish,
-  expectedResultPlain,
-  expectedResultJSON,
-} from '../__fixtures__/expectedResults.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+const getFixturePath = (fileName) => path.join(__dirname, '..', '__fixtures__', fileName);
+const readFixture = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf8');
 
-const file1Json = getFixturePath('file1.json');
-const file2Json = getFixturePath('file2.json');
-const file1Yaml = getFixturePath('file1.yaml');
-const file2Yml = getFixturePath('file2.yml');
+const expectedRsultStylish = readFixture('expected_stylish.txt');
+const expectedResultPlain = readFixture('expected_plain.txt');
+const expectedResultJSON = readFixture('expected_json.txt');
+
+const pathToFile1Json = getFixturePath('file1.json');
+const pathToFile2Json = getFixturePath('file2.json');
+const pathToFile1Yaml = getFixturePath('file1.yaml');
+const pathToFile2Yml = getFixturePath('file2.yml');
 
 test('genDiff stylish', () => {
-  expect(genDiff(file1Json, file2Json)).toBe(expectedResultStylish);
-  expect(genDiff(file1Yaml, file2Yml)).toBe(expectedResultStylish);
+  expect(genDiff(pathToFile1Json, pathToFile2Json)).toBe(expectedRsultStylish);
+  expect(genDiff(pathToFile1Yaml, pathToFile2Yml)).toBe(expectedRsultStylish);
 });
 
 test('genDiff plain', () => {
-  expect(genDiff(file1Json, file2Json, 'plain')).toBe(expectedResultPlain);
-  expect(genDiff(file1Yaml, file2Yml, 'plain')).toBe(expectedResultPlain);
+  expect(genDiff(pathToFile1Json, pathToFile2Json, 'plain')).toBe(expectedResultPlain);
+  expect(genDiff(pathToFile1Yaml, pathToFile2Yml, 'plain')).toBe(expectedResultPlain);
 });
 
 test('genDiff json', () => {
-  expect(genDiff(file1Json, file2Json, 'json')).toBe(JSON.stringify(expectedResultJSON));
-  expect(genDiff(file1Yaml, file2Yml, 'json')).toBe(JSON.stringify(expectedResultJSON));
+  expect(genDiff(pathToFile1Json, pathToFile2Json, 'json')).toBe(expectedResultJSON);
+  expect(genDiff(pathToFile1Yaml, pathToFile2Yml, 'json')).toBe(expectedResultJSON);
 });
+
+/* можно ли константы с путями к фикстурам и с содержанием фикстур оставить в корне
+файла с тестами или их обязательно надо помещать в beforeAll? */
