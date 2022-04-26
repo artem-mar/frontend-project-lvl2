@@ -32,6 +32,3 @@ test('genDiff json', () => {
   expect(genDiff(pathToFile1Json, pathToFile2Json, 'json')).toBe(expectedResultJSON);
   expect(genDiff(pathToFile1Yaml, pathToFile2Yml, 'json')).toBe(expectedResultJSON);
 });
-
-/* можно ли константы с путями к фикстурам и с содержанием фикстур оставить в корне
-файла с тестами или их обязательно надо помещать в beforeAll? */
