@@ -1,49 +1,50 @@
 import _ from 'lodash';
 
-const stylish = (differencesTree) => {
-  const iter = (node, deepth) => {
-    const spacesCount = 4;
-    const indentSize = deepth * spacesCount;
-    const changedIndent = ' '.repeat(indentSize - spacesCount / 2); // для элементов с +/-
-    const bracketIndent = ' '.repeat(indentSize - spacesCount);
+const makeIndent = (depth, replacer = '  ') => {
+  const spacesCount = 4;
+  const indentSize = depth * spacesCount - replacer.length;
+  const indent = ' '.repeat(indentSize) + replacer;
+  return indent;
+};
 
-    if (!_.isObject(node)) {
-      return `${node}`;
-    }
-    if (node.type === 'root') {
-      return ['{',
-        ...node.children.map((item) => iter(item, 1)),
-        '}',
-      ].join('\n');
-    }
+const stringify = (value, depth) => {
+  if (!_.isObject(value)) {
+    return `${value}`;
+  }
+  const lines = Object
+    .entries(value)
+    .map(([key, val]) => `${makeIndent(depth)}${key}: ${stringify(val, depth + 1)}`);
+
+  return [
+    '{',
+    ...lines,
+    `${makeIndent(depth - 1)}}`,
+  ].join('\n');
+};
+
+const stylish = (differencesTree) => {
+  const iter = (node, depth) => {
     if (node.type === 'equal') {
-      return `  ${changedIndent}${node.key}: ${node.value}`;
+      return `${makeIndent(depth)}${node.key}: ${node.value}`;
     }
     if (node.type === 'added') {
-      return `${changedIndent}+ ${node.key}: ${iter(node.value, deepth + 1)}`;
+      return `${makeIndent(depth, '+ ')}${node.key}: ${stringify(node.value, depth + 1)}`;
     }
     if (node.type === 'removed') {
-      return `${changedIndent}- ${node.key}: ${iter(node.value, deepth + 1)}`;
+      return `${makeIndent(depth, '- ')}${node.key}: ${stringify(node.value, depth + 1)}`;
     }
     if (node.type === 'updated') {
-      const line1 = `${changedIndent}- ${node.key}: ${iter(node.value1, deepth + 1)}`;
-
-      const line2 = `${changedIndent}+ ${node.key}: ${iter(node.value2, deepth + 1)}`;
+      const line1 = `${makeIndent(depth, '- ')}${node.key}: ${stringify(node.value1, depth + 1)}`;
+      const line2 = `${makeIndent(depth, '+ ')}${node.key}: ${stringify(node.value2, depth + 1)}`;
       return `${line1}\n${line2}`;
     }
     if (node.type === 'comparison object') {
-      const lines = node.children.map((item) => iter(item, deepth + 1));
-      return `  ${changedIndent}${node.key}: {\n${lines.join('\n')}\n  ${changedIndent}}`;
+      const lines = node.children.map((item) => iter(item, depth + 1));
+      return `${makeIndent(depth)}${node.key}: {\n${lines.join('\n')}\n${makeIndent(depth)}}`;
     }
-
-    const lines = Object
-      .entries(node)
-      .map(([key, val]) => `  ${changedIndent}${key}: ${iter(val, deepth + 1)}`);
-
-    return [
-      '{',
-      ...lines,
-      `${bracketIndent}}`,
+    return ['{',
+      ...node.children.map((item) => iter(item, 1)),
+      '}',
     ].join('\n');
   };
   return iter(differencesTree, 1);
