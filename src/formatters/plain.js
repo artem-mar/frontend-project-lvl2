@@ -19,21 +19,16 @@ const plain = (differencesTree) => {
     switch (node.type) {
       case 'root':
         return node.children.map((item) => iter(item)).join('');
-      case 'added': {
+      case 'added':
         return `Property '${path}' was added with value: ${value}\n`;
-      }
-      case 'removed': {
+      case 'removed':
         return `Property '${path}' was removed\n`;
-      }
-      case 'updated': {
+      case 'updated':
         return `Property '${path}' was updated. From ${value1} to ${value2}\n`;
-      }
-      case 'comparison object': {
+      case 'comparison object':
         return node.children.map((item) => iter(item, path)).join('');
-      }
-      default: {
+      default:
         return '';
-      }
     }
   };
   return iter(differencesTree).trim();
