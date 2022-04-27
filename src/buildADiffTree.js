@@ -7,26 +7,16 @@ const compare = (obj1, obj2) => {
 
   const differences = allSortedUniqKeys.map((key) => {
     if (!keys1.includes(key)) {
-      const type = 'added';
-      const value = obj2[key];
-      return { key, type, value };
+      return { key, type: 'added', value: obj2[key] };
     }
     if (!keys2.includes(key)) {
-      const type = 'removed';
-      const value = obj1[key];
-      return { key, type, value };
+      return { key, type: 'removed', value: obj1[key] };
     }
-
     if (_.isPlainObject(obj1[key]) && _.isPlainObject(obj2[key])) {
-      const type = 'comparison object';
-      const children = compare(obj1[key], obj2[key]);
-      return { key, type, children };
+      return { key, type: 'comparison object', children: compare(obj1[key], obj2[key]) };
     }
-
     if (obj1[key] === obj2[key]) {
-      const type = 'equal';
-      const value = obj1[key];
-      return { key, type, value };
+      return { key, type: 'equal', value: obj1[key] };
     }
 
     return {
