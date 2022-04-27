@@ -40,11 +40,10 @@ const stylish = (differencesTree) => {
         const lines = node.children.map((item) => iter(item, depth + 1));
         return `${makeIndent(depth)}${node.key}: {\n${lines.join('\n')}\n${makeIndent(depth)}}`;
       }
+      case 'root':
+        return `{\n${node.children.map((item) => iter(item, 1)).join('\n')}\n}`;
       default:
-        return ['{',
-          ...node.children.map((item) => iter(item, 1)),
-          '}',
-        ].join('\n');
+        throw new Error(`Unexpected node type: ${node.type}`);
     }
   };
   return iter(differencesTree, 1);
