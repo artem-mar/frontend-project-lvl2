@@ -24,28 +24,28 @@ const stringify = (value, depth) => {
 
 const stylish = (differencesTree) => {
   const iter = (node, depth) => {
-    if (node.type === 'equal') {
-      return `${makeIndent(depth)}${node.key}: ${node.value}`;
+    switch (node.type) {
+      case 'equal':
+        return `${makeIndent(depth)}${node.key}: ${node.value}`;
+      case 'added':
+        return `${makeIndent(depth, '+ ')}${node.key}: ${stringify(node.value, depth + 1)}`;
+      case 'removed':
+        return `${makeIndent(depth, '- ')}${node.key}: ${stringify(node.value, depth + 1)}`;
+      case 'updated': {
+        const line1 = `${makeIndent(depth, '- ')}${node.key}: ${stringify(node.value1, depth + 1)}`;
+        const line2 = `${makeIndent(depth, '+ ')}${node.key}: ${stringify(node.value2, depth + 1)}`;
+        return `${line1}\n${line2}`;
+      }
+      case 'comparison object': {
+        const lines = node.children.map((item) => iter(item, depth + 1));
+        return `${makeIndent(depth)}${node.key}: {\n${lines.join('\n')}\n${makeIndent(depth)}}`;
+      }
+      default:
+        return ['{',
+          ...node.children.map((item) => iter(item, 1)),
+          '}',
+        ].join('\n');
     }
-    if (node.type === 'added') {
-      return `${makeIndent(depth, '+ ')}${node.key}: ${stringify(node.value, depth + 1)}`;
-    }
-    if (node.type === 'removed') {
-      return `${makeIndent(depth, '- ')}${node.key}: ${stringify(node.value, depth + 1)}`;
-    }
-    if (node.type === 'updated') {
-      const line1 = `${makeIndent(depth, '- ')}${node.key}: ${stringify(node.value1, depth + 1)}`;
-      const line2 = `${makeIndent(depth, '+ ')}${node.key}: ${stringify(node.value2, depth + 1)}`;
-      return `${line1}\n${line2}`;
-    }
-    if (node.type === 'comparison object') {
-      const lines = node.children.map((item) => iter(item, depth + 1));
-      return `${makeIndent(depth)}${node.key}: {\n${lines.join('\n')}\n${makeIndent(depth)}}`;
-    }
-    return ['{',
-      ...node.children.map((item) => iter(item, 1)),
-      '}',
-    ].join('\n');
   };
   return iter(differencesTree, 1);
 };
