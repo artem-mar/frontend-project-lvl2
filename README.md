@@ -8,10 +8,10 @@
 
 ### Примеры использования:
 **Формат `stylish`:**
-[![asciicast](https://asciinema.org/a/QcmCP3Ywi5knUDIaUJ5Eysd7G.svg)](https://asciinema.org/a/QcmCP3Ywi5knUDIaUJ5Eysd7G)
+[![asciicast](https://asciinema.org/a/QcmCP3Ywi5knUDIaUJ5Eysd7G.svg)](https://asciinema.org/a/QcmCP3Ywi5knUDIaUJ5Eysd7G)  
 
 **Формат `plain`:**
-[![asciicast](https://asciinema.org/a/wEHHF4z6ERXHChG2mMCpz4VB4.svg)](https://asciinema.org/a/wEHHF4z6ERXHChG2mMCpz4VB4)
+[![asciicast](https://asciinema.org/a/wEHHF4z6ERXHChG2mMCpz4VB4.svg)](https://asciinema.org/a/wEHHF4z6ERXHChG2mMCpz4VB4)  
 
 **Формат `json`:**
-[![asciicast](https://asciinema.org/a/Q9LGqwSiRDeMmA7jnZRmIPpxc.svg)](https://asciinema.org/a/Q9LGqwSiRDeMmA7jnZRmIPpxc)
+[![asciicast](https://asciinema.org/a/Q9LGqwSiRDeMmA7jnZRmIPpxc.svg)](https://asciinema.org/a/Q9LGqwSiRDeMmA7jnZRmIPpxc)  
